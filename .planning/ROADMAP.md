@@ -576,7 +576,38 @@ Plans:
 - [x] 13-02-PLAN.md — Create SyncService for file copying with safety features
 - [x] 13-03-PLAN.md — Create copy-from-original CLI command with dry-run, force, diff, and orphan reporting
 
+### Phase 14: gsd-oc-tools.cjs for quick operations
+
+**Goal:** CLI utility script for fast validation and management of opencode configuration files (check-opencode-json, check-config-json, update-opencode-json)
+**Depends on:** Phase 13
+**Plans:** 2/2 plans complete
+
+Plans:
+- [ ] 14-01-PLAN.md — Core infrastructure: oc-core.cjs, oc-models.cjs, check-opencode-json, check-config-json, main entry point
+- [ ] 14-02-PLAN.md — Update command: oc-config.cjs, update-opencode-json with backup and profile application
+
+### Phase 15: fix set-profile script
+
+**Goal:** Fix set-profile script to properly handle profile switching with correct config.json schema, model validation, and opencode.json updates
+**Depends on:** Phase 14
+**Plans:** 1 plan
+
+Plans:
+- [ ] 15-01-PLAN.md — Fix set-profile with validation, backups, and proper JSON output (7 tasks, SETPROFILE-01 to SETPROFILE-07)
+
+### Phase 16: pivot profile support
+
+**Goal:** CLI utility for pivoting between profiles using `.planning/oc_config.json` as the profile configuration source with `set-profile` and `get-profile` commands
+**Depends on:** Phase 15
+**Plans:** 4/4 plans complete
+
+Plans:
+- [x] 16-01-PLAN.md — Foundation: oc-profile-config.cjs library for oc_config.json operations
+- [x] 16-02-PLAN.md — get-profile command with two operation modes (current profile, specific profile)
+- [x] 16-03-PLAN.md — set-profile-phase16 and pivot-profile commands with three operation modes
+- [ ] 16-04-PLAN.md — Gap closure: Create missing pivot-profile.test.cjs
+
 ---
 
 *Roadmap created: 2026-02-09*
-*Last updated: 2026-02-22 (Phase 13 planning complete — 3 plans ready for execution)*
+*Last updated: 2026-03-02 (Phase 15 planned — 1 plan with 7 tasks ready for execution)*

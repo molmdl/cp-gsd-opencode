@@ -45,7 +45,7 @@ question([
     options: [
       { label: "Simple", description: "One model for all agents (not flexible)" },
       { label: "Smart (Recommended)", description: "Two models: one for reseach and planing, other for execution and verification" },
-      { label: "Custom (most flexible)", description: "Three models: different for every stage" }
+      { label: "Genius (most flexible)", description: "Three models: different for every stage" }
     ]
   },
   {
@@ -113,7 +113,7 @@ Merge new settings into existing config.json:
 ```json
 {
   ...existing_config,
-  "model_profile": "simple" | "smart" | "custom",
+  "model_profile": "simple" | "smart" | "genius",
   "workflow": {
     "research": true/false,
     "plan_check": true/false,
@@ -128,6 +128,7 @@ Merge new settings into existing config.json:
 ```
 
 write updated config to `.planning/config.json`.
+
 </step>
 
 <step name="save_as_defaults">
@@ -183,7 +184,7 @@ Display:
 
 | Setting              | Value |
 |----------------------|-------|
-| Model Profile        | {simple/smart/custom} |
+| Model Profile        | {simple/smart/genius} |
 | Plan Researcher      | {On/Off} |
 | Plan Checker         | {On/Off} |
 | Execution Verifier   | {On/Off} |

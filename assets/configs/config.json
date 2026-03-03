@@ -15,6 +15,8 @@
   "include": ["gsd-opencode/**"],
   "exclude": [
     "node_modules/**",
+    "gsd-opencode/node_modules/**",
+    "gsd-opencode/get-shit-done/bin/test/**",
     ".git/**",
     ".translate-backups/**",
     "assets/**",
@@ -203,6 +205,16 @@
     {
       "pattern": "/gsd:set-profile",
       "replacement": "/gsd-set-profile",
+      "description": "Transform command /gsd:set-profile"
+    },
+    {
+      "pattern": "/gsd:set-profile <profile> — switch model profile",
+      "replacement": "/gsd-set-profile <profile> — switch model profile/choose models",
+      "description": "Transform command /gsd:set-profile"
+    },
+    {
+      "pattern": "/gsd-set-profile <profile> — switch model profile",
+      "replacement": "/gsd-set-profile <profile> — switch model profile/choose models",
       "description": "Transform command /gsd:set-profile"
     },
     {
