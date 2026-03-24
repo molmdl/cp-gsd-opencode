@@ -1,37 +1,32 @@
 {
   "mode": "yolo",
-  "depth": "standard",
   "parallelization": true,
   "commit_docs": false,
   "model_profile": "quality",
   "profiles": {
-    "active_profile": "quality",
     "presets": {
       "quality": {
-        "planning": "opencode/glm-4.7-free",
-        "execution": "opencode/glm-4.7-free",
-        "verification": "opencode/glm-4.7-free"
+        "planning": "bailian-coding-plan/qwen3.5-plus",
+        "execution": "bailian-coding-plan/qwen3.5-plus",
+        "verification": "bailian-coding-plan/qwen3.5-plus"
       },
       "balanced": {
-        "planning": "opencode/glm-4.7-free",
-        "execution": "opencode/minimax-m2.1-free",
-        "verification": "opencode/glm-4.7-free"
+        "planning": "bailian-coding-plan/qwen3.5-plus",
+        "execution": "bailian-coding-plan/qwen3.5-plus",
+        "verification": "bailian-coding-plan/qwen3.5-plus"
       },
       "budget": {
-        "planning": "opencode/minimax-m2.1-free",
-        "execution": "opencode/grok-code",
-        "verification": "opencode/minimax-m2.1-free"
+        "planning": "bailian-coding-plan/qwen3.5-plus",
+        "execution": "bailian-coding-plan/qwen3.5-plus",
+        "verification": "bailian-coding-plan/qwen3.5-plus"
       }
-    },
-    "custom_overrides": {
-      "quality": {},
-      "balanced": {},
-      "budget": {}
     }
   },
   "workflow": {
     "research": true,
     "plan_check": true,
     "verifier": true
-  }
+  },
+  "current_oc_profile": "quality",
+  "granularity": "standard"
 }

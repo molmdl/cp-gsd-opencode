@@ -1,0 +1,500 @@
+{
+  "_description": "Translation config for Claude Code → OpenCode migration",
+  "_source": "Claude Code (get-shit-done-cc)",
+  "_target": "OpenCode (gsd-opencode)",
+  "_mapping_reference": "assets/prompts/TRANSLATION-MAPPING.md",
+  "_usage": "node assets/bin/translate.js assets/configs/config.json [--apply] [--show-diff]",
+  "patterns": [
+    "**/*.md",
+    "**/*.js",
+    "**/*.json",
+    "**/*.yaml",
+    "**/*.yml",
+    "**/*.toml"
+  ],
+  "include": ["gsd-opencode/**"],
+  "exclude": [
+    "node_modules/**",
+    "gsd-opencode/node_modules/**",
+    "gsd-opencode/get-shit-done/bin/test/**",
+    ".git/**",
+    ".translate-backups/**",
+    "assets/**",
+    "**/*.bak",
+    "**/*.png",
+    "**/*.jpg",
+    "**/*.gif",
+    "**/*.ico",
+    "**/*.svg",
+    "**/oc-*",
+    "**/*-oc-*"
+  ],
+  "maxFileSize": 10485760,
+  "rules": [
+    {
+      "pattern": "https://raw.githubusercontent.com/glittercowboy/get-shit-done",
+      "replacement": "https://raw.githubusercontent.com/rokicool/gsd-opencode",
+      "description": "Transform raw GitHub URLs from glittercowboy org"
+    },
+    {
+      "pattern": "https://github.com/glittercowboy/get-shit-done",
+      "replacement": "https://github.com/rokicool/gsd-opencode",
+      "description": "Transform GitHub URLs from glittercowboy org"
+    },
+    {
+      "pattern": "https://raw.githubusercontent.com/gsd-build/get-shit-done",
+      "replacement": "https://raw.githubusercontent.com/rokicool/gsd-opencode",
+      "description": "Transform raw GitHub URLs from gsd-build org"
+    },
+    {
+      "pattern": "https://github.com/gsd-build/get-shit-done",
+      "replacement": "https://github.com/rokicool/gsd-opencode",
+      "description": "Transform GitHub URLs from gsd-build org"
+    },
+    {
+      "pattern": "rokicool/get-shit-done",
+      "replacement": "rokicool/gsd-opencode",
+      "description": "Fix any remaining rokicool/get-shit-done references"
+    },
+    {
+      "pattern": "glittercowboy",
+      "replacement": "rokicool",
+      "description": "Catch-all for remaining glittercowboy username references"
+    },
+    {
+      "pattern": "get-shit-done-cc",
+      "replacement": "gsd-opencode",
+      "description": "Replace project reference get-shit-done-cc with gsd-opencode"
+    },
+    {
+      "pattern": "$HOME/.claude/get-shit-done/",
+      "replacement": "$HOME/.config/opencode/get-shit-done/",
+      "caseSensitive": true,
+      "description": "Transform Claude path with get-shit-done subdirectory"
+    },
+    {
+      "pattern": "~/.claude/get-shit-done/",
+      "replacement": "$HOME/.config/opencode/get-shit-done/",
+      "caseSensitive": true,
+      "description": "Transform Claude path with get-shit-done subdirectory"
+    },
+    {
+      "pattern": "~/.claude/",
+      "replacement": "$HOME/.config/opencode/",
+      "caseSensitive": true,
+      "description": "Transform Claude config path to OpenCode (with trailing slash)"
+    },
+    {
+      "pattern": "~/.claude",
+      "replacement": "$HOME/.config/opencode",
+      "caseSensitive": true,
+      "description": "Transform Claude config path to OpenCode (without trailing slash)"
+    },
+    {
+      "pattern": "/gsd:set-profile <profile> — switch model profile(?!/choose models)",
+      "replacement": "/gsd-set-profile <profile> — switch model profile/choose models",
+      "description": "Transform command /gsd:set-profile",
+      "isRegex": true
+    },
+    {
+      "pattern": "/gsd:",
+      "replacement": "/gsd-",
+      "description": "Catch-all for remaining /gsd: slash commands"
+    },
+    {
+      "pattern": "name: set-profile",
+      "replacement": "name: gsd-set-profile",
+      "caseSensitive": true,
+      "description": "Fix set-profile frontmatter name to include gsd- prefix"
+    },
+    {
+      "pattern": "name: gsd:",
+      "replacement": "name: gsd-",
+      "caseSensitive": true,
+      "description": "Transform frontmatter name field from colon to dash"
+    },
+    {
+      "pattern": "/clear",
+      "replacement": "/new",
+      "description": "Transform /clear command to /new"
+    },
+    {
+      "pattern": "AskUserQuestion",
+      "replacement": "question",
+      "caseSensitive": true,
+      "description": "Transform AskUserQuestion tool to question"
+    },
+    {
+      "pattern": "SlashCommand",
+      "replacement": "command",
+      "caseSensitive": true,
+      "description": "Transform SlashCommand reference to command"
+    },
+    {
+      "pattern": "BashOutput",
+      "replacement": "bash output",
+      "caseSensitive": true,
+      "description": "Transform BashOutput reference to bash output"
+    },
+    {
+      "pattern": "TodoWrite",
+      "replacement": "todowrite",
+      "caseSensitive": true,
+      "description": "Transform TodoWrite tool to lowercase todowrite"
+    },
+    {
+      "pattern": "TodoRead",
+      "replacement": "todoread",
+      "caseSensitive": true,
+      "description": "Transform TodoRead tool to lowercase todoread"
+    },
+    {
+      "pattern": "WebFetch",
+      "replacement": "webfetch",
+      "caseSensitive": true,
+      "description": "Transform WebFetch tool to lowercase webfetch"
+    },
+    {
+      "pattern": "WebSearch",
+      "replacement": "websearch",
+      "caseSensitive": true,
+      "description": "Transform WebSearch tool to lowercase websearch"
+    },
+    {
+      "pattern": "Bash",
+      "replacement": "bash",
+      "caseSensitive": true,
+      "description": "Transform Bash tool to lowercase bash"
+    },
+    {
+      "pattern": "Read",
+      "replacement": "read",
+      "caseSensitive": true,
+      "description": "Transform Read tool to lowercase read"
+    },
+    {
+      "pattern": "Write",
+      "replacement": "write",
+      "caseSensitive": true,
+      "description": "Transform Write tool to lowercase write"
+    },
+    {
+      "pattern": "Edit",
+      "replacement": "edit",
+      "caseSensitive": true,
+      "description": "Transform Edit tool to lowercase edit"
+    },
+    {
+      "pattern": "Patch",
+      "replacement": "patch",
+      "caseSensitive": true,
+      "description": "Transform Patch tool to lowercase patch"
+    },
+    {
+      "pattern": "Glob",
+      "replacement": "glob",
+      "caseSensitive": true,
+      "description": "Transform Glob tool to lowercase glob"
+    },
+    {
+      "pattern": "Grep",
+      "replacement": "grep",
+      "caseSensitive": true,
+      "description": "Transform Grep tool to lowercase grep"
+    },
+    {
+      "pattern": "Skill",
+      "replacement": "skill",
+      "caseSensitive": true,
+      "description": "Transform Skill tool to lowercase skill"
+    },
+    {
+      "pattern": "Question",
+      "replacement": "question",
+      "caseSensitive": true,
+      "description": "Transform Question tool to lowercase question"
+    },
+    {
+      "pattern": "Task",
+      "replacement": "task",
+      "caseSensitive": true,
+      "description": "Transform Task tool to lowercase task"
+    },
+    {
+      "pattern": "(^[\\s]*For each library/framework:\\r?[\\s]*- mcp__context7__resolve-library-id)",
+      "replacement": "$1 ",
+      "caseSensitive": true,
+      "isRegex": true,
+      "description": "exclude this specific case from regexp"
+    },
+    {
+      "_comment": "regex for tools",
+      "pattern": "^([\\s]*)- (read|write|edit|bash|glob|grep|question|task|webfetch|todowrite)$",
+      "replacement": "$1 $2: true",
+      "caseSensitive": true,
+      "isRegex": true,
+      "transform": "",
+      "description": ""
+    },
+    {
+      "_comment": "regex for tools",
+      "pattern": "^([\\s]*)- (mcp__context7__[^\\s]*)$",
+      "replacement": "$1 $2: true",
+      "caseSensitive": true,
+      "isRegex": true,
+      "transform": "",
+      "description": ""
+    },
+    {
+      "_comment": "regex for tools",
+      "pattern": "^([\\s]*)- (command)$",
+      "replacement": "$1 task: true",
+      "caseSensitive": true,
+      "isRegex": true,
+      "transform": "",
+      "description": ""
+    },
+    {
+      "_comment": "Generic regex fallback for any remaining tools: lines",
+      "pattern": "^tools: ([a-z0-9_*, ]+)$",
+      "replacement": "permissions:\\n  $1: true",
+      "caseSensitive": true,
+      "isRegex": true,
+      "transform": "tools_list_to_yaml",
+      "description": "Generic regex to convert any remaining tools list to YAML map"
+    },
+    {
+      "_comment": "Generic regex fallback for any remaining tools: lines",
+      "pattern": "allowed-tools:",
+      "replacement": "permissions:",
+      "caseSensitive": true,
+      "isRegex": false,
+      "transform": "allowed-tools to permissions",
+      "description": ""
+    },
+    {
+      "pattern": "<sub>",
+      "replacement": "*",
+      "caseSensitive": true,
+      "description": "Transform opening <sub> tag to italic markdown asterisk"
+    },
+    {
+      "pattern": "</sub>",
+      "replacement": "*",
+      "caseSensitive": true,
+      "description": "Transform closing </sub> tag to italic markdown asterisk"
+    },
+    {
+      "pattern": "color: cyan",
+      "replacement": "color: \"#00FFFF\"",
+      "caseSensitive": true,
+      "description": "Transform named color cyan to hex"
+    },
+    {
+      "pattern": "color: orange",
+      "replacement": "color: \"#FFA500\"",
+      "caseSensitive": true,
+      "description": "Transform named color orange to hex"
+    },
+    {
+      "pattern": "color: yellow",
+      "replacement": "color: \"#FFFF00\"",
+      "caseSensitive": true,
+      "description": "Transform named color yellow to hex"
+    },
+    {
+      "pattern": "color: blue",
+      "replacement": "color: \"#0000FF\"",
+      "caseSensitive": true,
+      "description": "Transform named color blue to hex"
+    },
+    {
+      "pattern": "color: green",
+      "replacement": "color: \"#008000\"",
+      "caseSensitive": true,
+      "description": "Transform named color green to hex"
+    },
+    {
+      "pattern": "color: purple",
+      "replacement": "color: \"#800080\"",
+      "caseSensitive": true,
+      "description": "Transform named color purple to hex"
+    },
+    {
+      "pattern": "All arguments become",
+      "replacement": "$ARGUMENTS become",
+      "caseSensitive": true,
+      "description": "Transform 'All arguments' variable reference to $ARGUMENTS"
+    },
+    {
+      "pattern": "subagent_type=\"general-purpose\"",
+      "replacement": "subagent_type=\"general\"",
+      "caseSensitive": true,
+      "description": "Transform general-purpose subagent type to general"
+    },
+    {
+      "pattern": "subagent_type=\"Explore\"",
+      "replacement": "subagent_type=\"explore\"",
+      "caseSensitive": true,
+      "description": "Transform Explore subagent type to lowercase explore"
+    },
+    {
+      "pattern": "subagent_type=\"task\"",
+      "replacement": "subagent_type=\"general\"",
+      "caseSensitive": true,
+      "description": "Transform task subagent type to general"
+    },
+    {
+      "pattern": "CLAUDE.md",
+      "replacement": "AGENTS.md",
+      "caseSensitive": true,
+      "description": "Transform CLAUDE.md project instructions file to AGENTS.md"
+    },
+    {
+      "pattern": "OPENCODE.md",
+      "replacement": "AGENTS.md",
+      "caseSensitive": true,
+      "description": "Transform OPENCODE.md project instructions file to AGENTS.md"
+    },
+    {
+      "pattern": "~/.claude/config.json",
+      "replacement": "$HOME/.config/opencode/opencode.json",
+      "caseSensitive": true,
+      "description": "Transform Claude config file path to OpenCode config file"
+    },
+    {
+      "pattern": "$HOME/.claude/config.json",
+      "replacement": "$HOME/.config/opencode/opencode.json",
+      "caseSensitive": true,
+      "description": "Transform Claude config file path to OpenCode config file"
+    },
+    {
+      "pattern": "Claude Code",
+      "replacement": "OpenCode",
+      "description": "Transform Claude Code references to OpenCode"
+    },
+    {
+      "pattern": "Claude's",
+      "replacement": "OpenCode's",
+      "caseSensitive": true,
+      "description": "Transform Claude's possessive to OpenCode's"
+    },
+    {
+      "pattern": "Claude",
+      "replacement": "OpenCode",
+      "description": "Transform standalone Claude references to OpenCode"
+    },
+    {
+      "pattern": "quality/balanced/budget",
+      "replacement": "simple/smart/genius",
+      "description": "Replace qbd with ssc"
+    },
+    {
+      "pattern": "quality|balanced|budget",
+      "replacement": "simple|smart|genius",
+      "description": "Replace qbd with ssc"
+    },
+    {
+      "pattern": "get-shit-done/workflows/set-profile.md",
+      "replacement": "get-shit-done/workflows/oc-set-profile.md",
+      "description": "Use OpenCode related process instead of Claude Code's one"
+    },
+    {
+      "pattern": "default: `balanced`",
+      "replacement": "default: `simple`",
+      "description": "Use simple - one model for all agents - profile"
+    },
+    {
+      "pattern": "label: \"Quality\"",
+      "replacement": "label: \"Simple\"",
+      "description": "Use simple - one model for all agents - profile"
+    },
+    {
+      "pattern": "description: \"Opus everywhere except verification (highest cost)\"",
+      "replacement": "description: \"One model for all agents (not flexible)\"",
+      "description": "Use simple - one model for all agents - profile"
+    },
+    {
+      "pattern": "\"Opus for research/roadmap — higher cost, deeper analysis\"",
+      "replacement": "description: \"One model for all agents (not flexible)\"",
+      "description": "Use simple - one model for all agents - profile"
+    },
+    {
+      "pattern": "label: \"Balanced (Recommended)\"",
+      "replacement": "label: \"Smart (Recommended)\"",
+      "description": "Use - two models: advanced and less advanced - profile"
+    },
+    {
+      "pattern": "description: \"Opus for planning, Sonnet for execution/verification\"",
+      "replacement": "description: \"Two models: one for reseach and planing, other for execution and verification\"",
+      "description": "Use - two models: advanced and less advanced - profile"
+    },
+    {
+      "pattern": "description: \"Sonnet for most agents — good quality/cost ratio\"",
+      "replacement": "description: \"Two models: one for reseach and planing, other for execution and verification\"",
+      "description": "Use - two models: advanced and less advanced - profile"
+    },
+    {
+      "pattern": "label: \"Budget\"",
+      "replacement": "label: \"Genius (most flexible)\"",
+      "description": "Use - three models - profile"
+    },
+    {
+      "pattern": "description: \"Sonnet for writing, Haiku for research/verification (lowest cost)\"",
+      "replacement": "description: \"Three models: different for every stage\"",
+      "description": "Use - three models - profile"
+    },
+    {
+      "pattern": "description: \"Haiku where possible — fastest, lowest cost\"",
+      "replacement": "description: \"Three models: different for every stage\"",
+      "description": "Use - three models - profile"
+    },
+    {
+      "pattern": "\"quality\" | \"balanced\" | \"budget\"",
+      "replacement": "\"simple\" | \"smart\" | \"genius\"",
+      "description": "Use - three models - profile"
+    }
+  ],
+  "_forbidden_strings_after_translation": [
+    "Claude",
+    "Claude Code",
+    "Claude's",
+    "<sub>",
+    "</sub>",
+    "~/.claude",
+    "/gsd:",
+    "gsd:plan-phase",
+    "gsd:execute-phase",
+    "gsd:research-phase",
+    "gsd:verify-phase",
+    "gsd:discuss-phase",
+    "gsd:new-project",
+    "gsd:new-milestone",
+    "gsd:complete-milestone",
+    "gsd:add-phase",
+    "gsd:insert-phase",
+    "gsd:remove-phase",
+    "get-shit-done-cc",
+    "glittercowboy",
+    "rokicool/get-shit-done",
+    "AskUserQuestion",
+    "SlashCommand",
+    "BashOutput",
+    "TodoWrite",
+    "TodoRead",
+    "WebFetch",
+    "WebSearch",
+    "All arguments become",
+    "/clear",
+    "color: cyan",
+    "color: orange",
+    "color: yellow",
+    "color: blue",
+    "color: green",
+    "color: purple",
+    "name: set-profile",
+    "subagent_type=\"general-purpose\"",
+    "subagent_type=\"Explore\"",
+    "CLAUDE.md"
+  ]
+}

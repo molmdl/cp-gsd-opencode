@@ -15,28 +15,20 @@ No Pass/Fail buttons. No severity questions. Just: "Here's what should happen. D
 </philosophy>
 
 <template>
-@~/.config/opencode/get-shit-done/templates/UAT.md
+@$HOME/.config/opencode/get-shit-done/templates/UAT.md
 </template>
 
 <process>
 
-<step name="resolve_model_profile" priority="first">
-read model profile for agent spawning:
+<step name="initialize" priority="first">
+If $ARGUMENTS contains a phase number, load context:
 
 ```bash
-MODEL_PROFILE=$(cat .planning/config.json 2>/dev/null | grep -o '"model_profile"[[:space:]]*:[[:space:]]*"[^"]*"' | grep -o '"[^"]*"$' | tr -d '"' || echo "balanced")
+INIT=$(node "$HOME/.config/opencode/get-shit-done/bin/gsd-tools.cjs" init verify-work "${PHASE_ARG}")
+if [[ "$INIT" == @file:* ]]; then INIT=$(cat "${INIT#@file:}"); fi
 ```
 
-Default to "balanced" if not set.
-
-**Model lookup table:**
-
-| Agent | quality | balanced | budget |
-|-------|---------|----------|--------|
-| gsd-planner | opus | opus | sonnet |
-| gsd-plan-checker | sonnet | sonnet | haiku |
-
-Store resolved models for use in Task calls below.
+Parse JSON for: `planner_model`, `checker_model`, `commit_docs`, `phase_found`, `phase_dir`, `phase_number`, `phase_name`, `has_verification`.
 </step>
 
 <step name="check_active_session">
@@ -46,7 +38,7 @@ Store resolved models for use in Task calls below.
 find .planning/phases -name "*-UAT.md" -type f 2>/dev/null | head -5
 ```
 
-**If active sessions exist AND no `$ARGUMENTS` provided:**
+**If active sessions exist AND no $ARGUMENTS provided:**
 
 read each file's frontmatter (status, phase) and Current Test section.
 
@@ -68,12 +60,12 @@ Wait for user response.
 - If user replies with number (1, 2) → Load that file, go to `resume_from_file`
 - If user replies with phase number → Treat as new session, go to `create_uat_file`
 
-**If active sessions exist AND `$ARGUMENTS` provided:**
+**If active sessions exist AND $ARGUMENTS provided:**
 
 Check if session exists for that phase. If yes, offer to resume or restart.
 If no, continue to `create_uat_file`.
 
-**If no active sessions AND no `$ARGUMENTS`:**
+**If no active sessions AND no $ARGUMENTS:**
 
 ```
 No active UAT sessions.
@@ -81,7 +73,7 @@ No active UAT sessions.
 Provide a phase number to start testing (e.g., /gsd-verify-work 4)
 ```
 
-**If no active sessions AND `$ARGUMENTS` provided:**
+**If no active sessions AND $ARGUMENTS provided:**
 
 Continue to `create_uat_file`.
 </step>
@@ -89,15 +81,10 @@ Continue to `create_uat_file`.
 <step name="find_summaries">
 **Find what to test:**
 
-Parse `$ARGUMENTS` as phase number (e.g., "4") or plan number (e.g., "04-02").
+Use `phase_dir` from init (or run init if not already done).
 
 ```bash
-# Find phase directory (match both zero-padded and unpadded)
-PADDED_PHASE=$(printf "%02d" ${PHASE_ARG} 2>/dev/null || echo "${PHASE_ARG}")
-PHASE_DIR=$(ls -d .planning/phases/${PADDED_PHASE}-* .planning/phases/${PHASE_ARG}-* 2>/dev/null | head -1)
-
-# Find SUMMARY files
-ls "$PHASE_DIR"/*-SUMMARY.md 2>/dev/null
+ls "$phase_dir"/*-SUMMARY.md 2>/dev/null
 ```
 
 read each SUMMARY.md to extract testable deliverables.
@@ -122,6 +109,19 @@ Examples:
   → Expected: "Clicking Reply opens inline composer below comment. Submitting shows reply nested under parent with visual indentation."
 
 Skip internal/non-observable items (refactors, type changes, etc.).
+
+**Cold-start smoke test injection:**
+
+After extracting tests from SUMMARYs, scan the SUMMARY files for modified/created file paths. If ANY path matches these patterns:
+
+`server.ts`, `server.js`, `app.ts`, `app.js`, `index.ts`, `index.js`, `main.ts`, `main.js`, `database/*`, `db/*`, `seed/*`, `seeds/*`, `migrations/*`, `startup*`, `docker-compose*`, `Dockerfile*`
+
+Then **prepend** this test to the test list:
+
+- name: "Cold Start Smoke Test"
+- expected: "Kill any running server/service. Clear ephemeral state (temp DBs, caches, lock files). Start the application from scratch. Server boots without errors, any seed/migration completes, and a primary query (health check, homepage load, or basic API call) returns live data."
+
+This catches bugs that only manifest on fresh start — race conditions in startup sequences, silent seed failures, missing environment setup — which pass against warm state but break in production.
 </step>
 
 <step name="create_uat_file">
@@ -178,7 +178,7 @@ skipped: 0
 [none yet]
 ```
 
-write to `.planning/phases/XX-name/{phase}-UAT.md`
+write to `.planning/phases/XX-name/{phase_num}-UAT.md`
 
 Proceed to `present_test`.
 </step>
@@ -304,21 +304,9 @@ Clear Current Test section:
 [testing complete]
 ```
 
-**Check planning config:**
-
-```bash
-COMMIT_PLANNING_DOCS=$(cat .planning/config.json 2>/dev/null | grep -o '"commit_docs"[[:space:]]*:[[:space:]]*[^,}]*' | grep -o 'true\|false' || echo "true")
-git check-ignore -q .planning 2>/dev/null && COMMIT_PLANNING_DOCS=false
-```
-
-**If `COMMIT_PLANNING_DOCS=false`:** Skip git operations
-
-**If `COMMIT_PLANNING_DOCS=true` (default):**
-
 Commit the UAT file:
 ```bash
-git add ".planning/phases/XX-name/{phase}-UAT.md"
-git commit -m "test({phase}): complete UAT - {passed} passed, {issues} issues"
+node "$HOME/.config/opencode/get-shit-done/bin/gsd-tools.cjs" commit "test({phase_num}): complete UAT - {passed} passed, {issues} issues" --files ".planning/phases/XX-name/{phase_num}-UAT.md"
 ```
 
 Present summary:
@@ -360,7 +348,7 @@ Spawning parallel debug agents to investigate each issue.
 ```
 
 - Load diagnose-issues workflow
-- Follow @~/.config/opencode/get-shit-done/workflows/diagnose-issues.md
+- Follow @$HOME/.config/opencode/get-shit-done/workflows/diagnose-issues.md
 - Spawn parallel debug agents for each issue
 - Collect root causes
 - Update UAT.md with root causes
@@ -384,21 +372,18 @@ Display:
 Spawn gsd-planner in --gaps mode:
 
 ```
-Task(
+task(
   prompt="""
 <planning_context>
 
 **Phase:** {phase_number}
 **Mode:** gap_closure
 
-**UAT with diagnoses:**
-@.planning/phases/{phase_dir}/{phase}-UAT.md
-
-**Project State:**
-@.planning/STATE.md
-
-**Roadmap:**
-@.planning/ROADMAP.md
+<files_to_read>
+- {phase_dir}/{phase_num}-UAT.md (UAT with diagnoses)
+- .planning/STATE.md (Project State)
+- .planning/ROADMAP.md (Roadmap)
+</files_to_read>
 
 </planning_context>
 
@@ -435,15 +420,16 @@ Initialize: `iteration_count = 1`
 Spawn gsd-plan-checker:
 
 ```
-Task(
+task(
   prompt="""
 <verification_context>
 
 **Phase:** {phase_number}
 **Phase Goal:** Close diagnosed gaps from UAT
 
-**Plans to verify:**
-@.planning/phases/{phase_dir}/*-PLAN.md
+<files_to_read>
+- {phase_dir}/*-PLAN.md (Plans to verify)
+</files_to_read>
 
 </verification_context>
 
@@ -474,15 +460,16 @@ Display: `Sending back to planner for revision... (iteration {N}/3)`
 Spawn gsd-planner with revision context:
 
 ```
-Task(
+task(
   prompt="""
 <revision_context>
 
 **Phase:** {phase_number}
 **Mode:** revision
 
-**Existing plans:**
-@.planning/phases/{phase_dir}/*-PLAN.md
+<files_to_read>
+- {phase_dir}/*-PLAN.md (Existing plans)
+</files_to_read>
 
 **Checker issues:**
 {structured_issues_from_checker}

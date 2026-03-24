@@ -1,0 +1,25 @@
+{
+  "_description": "Supplemental translation rules for v1.22.4 -- fixes remaining forbidden strings with skill references",
+  "include": ["gsd-opencode/**"],
+  "exclude": [
+    "node_modules/**",
+    ".git/**",
+    ".translate-backups/**",
+    "**/oc-*",
+    "**/*-oc-*"
+  ],
+  "rules": [
+    {
+      "pattern": "skill=\"gsd:plan-phase\"",
+      "replacement": "skill=\"gsd-plan-phase\"",
+      "caseSensitive": true,
+      "description": "Fix skill reference from gsd: to gsd- for plan-phase"
+    },
+    {
+      "pattern": "skill=\"gsd:execute-phase\"",
+      "replacement": "skill=\"gsd-execute-phase\"",
+      "caseSensitive": true,
+      "description": "Fix skill reference from gsd: to gsd- for execute-phase"
+    }
+  ]
+}
