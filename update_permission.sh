@@ -137,7 +137,7 @@ for file in "${TARGET_FILES[@]}"; do
       next
     }
     { print }
-  ' "$file" > "cp-${file}"
+  ' "$file" > "${file}.tmp" && mv "${file}.tmp" "$file"
 
   EDITED_FILES+=("$file")
 done
