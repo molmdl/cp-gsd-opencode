@@ -14,6 +14,6 @@ Place your own opencode.json with custom permission in this directory and run `b
 
 ## Note
 
-This is a minimal copy-only installation of and older version of gsd-opencode, lacking many features of the upstream repo.
+This is a minimal copy-only installation of an older version of gsd-opencode, lacking many features and optimization of the upstream repo.
 
-Use the upstream version for the full power of GSD-opencode.
+Use the upstream version to get the full power of GSD-opencode.
