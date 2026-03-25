@@ -1,6 +1,10 @@
 > Experimental
 
-# GSD by TACHES OpenCode (v1.9.4 - 2026-01-21), Port by Roman (Synced to update 2026-02-08), Adapted for Bash-only Minimal Installation 
+## Description of this fork
+* GSD by TACHES OpenCode (v1.9.4 - 2026-01-21), Port by Roman (Synced to update 2026-02-08)
+* Adapted for Bash-only Minimal Installation 
+
+## What is this
 
 This is a fork of an older version of GSD-opencode for minimal bash-only install and more fine-tuned agent permission.
 
