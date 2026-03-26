@@ -1,6 +1,7 @@
 > Experimental
 
 ## What is in this fork
+* Custom Permission GSD-opencode
 * GSD by TACHES OpenCode (v1.9.4 - 2026-01-21), Port by Roman (Synced to update 2026-02-08)
 * Adapted for Bash-only Minimal Installation 
 
