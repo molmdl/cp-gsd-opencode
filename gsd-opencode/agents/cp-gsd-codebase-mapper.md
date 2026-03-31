@@ -9,7 +9,7 @@ tools:
 color: "#00FFFF"
 permission:
   bash:
-    *: ask
+    "*": ask
     "git *": allow
     "git push*": ask
     "git pull*": ask
