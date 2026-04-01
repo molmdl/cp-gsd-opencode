@@ -9,23 +9,23 @@ tools:
 color: "#00FFFF"
 permission:
   bash:
-    "*": ask
-    "git *": allow
-    "git push*": ask
-    "git pull*": ask
-    "git merge*": ask
-    "git rebase*": ask
-    "git reset*": ask
-    "git checkout*": ask
-    "npm *": ask
-    "rm *": deny
-    "pip *": ask
-    "pip3 *": ask
-    "apt *": ask
-    "mv *": ask
-    "conda *": ask
-    "wget *": ask
-    "curl *": ask
+        "*": ask
+        "git *": allow
+        "git push *": ask
+        "git pull *": ask
+        "git merge *": ask
+        "git rebase *": ask
+        "git reset *": ask
+        "git checkout *": ask
+        "npm *": ask
+        "rm *": deny
+        "pip *": ask
+        "pip3 *": ask
+        "apt *": ask
+        "mv *": ask
+        "conda *": ask
+        "wget *": ask
+        "curl *": ask
 ---
 
 <role>
