@@ -3,8 +3,10 @@
 set -e
 
 # Get the directory where this script is located
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-SOURCE_DIR="$(dirname "$SCRIPT_DIR")"
+#SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_DIR="./gsd-opencode"
+#SOURCE_DIR="$(dirname "$SCRIPT_DIR")"
+SOURCE_DIR="./gsd-opencode" 
 
 # Initialize variables
 INSTALL_GLOBAL=""

@@ -13,8 +13,9 @@ For those who doesn't mind to approve and only needs the slash commands and agen
 
 Place your own opencode.json with custom permission in this directory and run `bash update_permission.sh` to create agents with updated permission with a `cp-` prefix.
 
+Install with `bash install.sh` (warning: simple script overwirtes the current installation!)
+
 ## Note
 
 This is a minimal copy-only installation of an older version of gsd-opencode, lacking many features and optimization of the upstream repo.
-
 Use the upstream version to get the full power of GSD-opencode.
