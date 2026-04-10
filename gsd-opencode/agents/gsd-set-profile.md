@@ -13,6 +13,7 @@ permission:
         "git reset *": ask
         "git checkout *": ask
         "npm *": ask
+        "curl *": ask
         "rm *": deny
 ---
 
