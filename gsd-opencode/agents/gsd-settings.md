@@ -6,6 +6,17 @@ tools:
   write: true
   bash: true
   question: true
+permission:
+  bash:
+        "git *": allow
+        "git push *": ask
+        "git pull *": ask
+        "git merge *": ask
+        "git rebase *": ask
+        "git reset *": ask
+        "git checkout *": ask
+        "npm *": ask
+        "rm *": deny
 ---
 
 <role>

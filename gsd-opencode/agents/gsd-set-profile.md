@@ -3,6 +3,17 @@ name: gsd-set-profile
 description: Switch between model profiles with confirmation workflow
 tools:
   question: true
+permission:
+  bash:
+        "git *": allow
+        "git push *": ask
+        "git pull *": ask
+        "git merge *": ask
+        "git rebase *": ask
+        "git reset *": ask
+        "git checkout *": ask
+        "npm *": ask
+        "rm *": deny
 ---
 
 <role>
