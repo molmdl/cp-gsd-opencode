@@ -8,6 +8,7 @@ tools:
   grep: true
 permission:
   bash:
+        "*": allow
         "git *": allow
         "git push *": ask
         "git pull *": ask
