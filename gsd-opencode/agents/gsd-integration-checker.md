@@ -17,7 +17,10 @@ permission:
         "git reset *": ask
         "git checkout *": ask
         "npm *": ask
+        "conda *": ask
+        "pip *": ask
         "curl *": ask
+        "find *": ask
         "rm *": deny
 color: "#0000FF"
 ---
